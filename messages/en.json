@@ -1,0 +1,58 @@
+{
+    "Sidebar": {
+        "dashboard": "Dashboard",
+        "services": "Services",
+        "services_moderation": "Service Moderation",
+        "destinations": "Destinations",
+        "users": "Users",
+        "users_management": "User Management",
+        "finances": "Finances",
+        "settings": "Settings"
+    },
+    "Dashboard": {
+        "welcome": "Welcome, {name}",
+        "totalUsers": "Total Users",
+        "pendingServices": "Pending Services",
+        "netIncome": "Net Income",
+        "usersTable": {
+            "name": "Name",
+            "role": "Role",
+            "status": "Status",
+            "joined": "Joined",
+            "actions": "Actions"
+        },
+        "servicesTable": {
+            "title": "Experience",
+            "provider": "Provider",
+            "price": "Price",
+            "status": "Status",
+            "actions": "Moderation",
+            "approve": "Approve",
+            "reject": "Reject"
+        },
+        "walletsTable": {
+            "user": "User",
+            "balance": "Balance",
+            "actions": "Transactions"
+        },
+        "destinationsTable": {
+            "name": "Name",
+            "location": "Location",
+            "stats": "Stats",
+            "actions": "Actions",
+            "create": "New Destination",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "networkStatus": {
+            "online": "Online",
+            "offline": "Offline",
+            "syncing": "Syncing"
+        }
+    },
+    "Common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "loading": "Loading..."
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "Sidebar": {
+        "dashboard": "Dashboard",
+        "services": "Servicios",
+        "services_moderation": "Moderación de Servicios",
+        "destinations": "Destinos",
+        "users": "Usuarios",
+        "users_management": "Gestión de Usuarios",
+        "finances": "Finanzas",
+        "settings": "Configuración"
+    },
+    "Dashboard": {
+        "welcome": "Bienvenido, {name}",
+        "totalUsers": "Total Usuarios",
+        "pendingServices": "Servicios Pendientes",
+        "netIncome": "Ingresos Netos",
+        "usersTable": {
+            "name": "Nombre",
+            "role": "Rol",
+            "status": "Estado",
+            "joined": "Registrado",
+            "actions": "Acciones"
+        },
+        "servicesTable": {
+            "title": "Experiencia",
+            "provider": "Proveedor",
+            "price": "Precio",
+            "status": "Estado",
+            "actions": "Moderación",
+            "approve": "Aprobar",
+            "reject": "Rechazar"
+        },
+        "walletsTable": {
+            "user": "Usuario",
+            "balance": "Saldo",
+            "actions": "Transacciones"
+        },
+        "destinationsTable": {
+            "name": "Nombre",
+            "location": "Ubicación",
+            "stats": "Estadísticas",
+            "actions": "Acciones",
+            "create": "Nuevo Destino",
+            "edit": "Editar",
+            "delete": "Eliminar"
+        },
+        "networkStatus": {
+            "online": "Online",
+            "offline": "Offline",
+            "syncing": "Sincronizando"
+        }
+    },
+    "Common": {
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "loading": "Cargando..."
+    }
+}

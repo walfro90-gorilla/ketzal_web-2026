@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  /* Ketzal Neo-Aztec Theme (Dark by default) */
+  --background: #0A0A0A; /* Obsidian */
+  --foreground: #FAFAFA; /* Generic Light */
+
+  --primary: #00E676; /* Jade Ketzal */
+  --primary-foreground: #000000;
+
+  --secondary: #FFD700; /* Gold Aztec */
+  --secondary-foreground: #000000;
+
+  --destructive: #EF4444; /* Mars Red */
+  --destructive-foreground: #FFFFFF;
+
+  --border: #27272A;
+  --input: #27272A;
+  --ring: #00E676;
+}
+
+/* Force Dark Mode aesthetic even if system is light (for now, as per req) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #0A0A0A;
+    --foreground: #FAFAFA;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}

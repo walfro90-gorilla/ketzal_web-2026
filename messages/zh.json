@@ -1,0 +1,58 @@
+{
+    "Sidebar": {
+        "dashboard": "仪表板",
+        "services": "服务",
+        "services_moderation": "服务审核",
+        "destinations": "目的地",
+        "users": "用户",
+        "users_management": "用户管理",
+        "finances": "财务",
+        "settings": "设置"
+    },
+    "Dashboard": {
+        "welcome": "欢迎, {name}",
+        "totalUsers": "总用户",
+        "pendingServices": "待处理服务",
+        "netIncome": "净收入",
+        "usersTable": {
+            "name": "姓名",
+            "role": "角色",
+            "status": "状态",
+            "joined": "注册时间",
+            "actions": "操作"
+        },
+        "servicesTable": {
+            "title": "体验",
+            "provider": "提供者",
+            "price": "价格",
+            "status": "状态",
+            "actions": "审核",
+            "approve": "批准",
+            "reject": "拒绝"
+        },
+        "walletsTable": {
+            "user": "用户",
+            "balance": "余额",
+            "actions": "交易"
+        },
+        "destinationsTable": {
+            "name": "名称",
+            "location": "位置",
+            "stats": "统计",
+            "actions": "操作",
+            "create": "新目的地",
+            "edit": "编辑",
+            "delete": "删除"
+        },
+        "networkStatus": {
+            "online": "在线",
+            "offline": "离线",
+            "syncing": "同步中"
+        }
+    },
+    "Common": {
+        "save": "保存",
+        "cancel": "取消",
+        "loading": "加载中..."
+    }
+}
