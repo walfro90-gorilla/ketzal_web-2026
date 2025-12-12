@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { Database } from '@/types/database.types';
 
 export default async function FinancesPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const supabase = await createClient();
     const t = await getTranslations('Sidebar');
 

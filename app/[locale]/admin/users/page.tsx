@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 export default async function UsersPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     // 1. Data Fetching
     const supabase = await createClient();
     const { data: profiles, error } = await supabase

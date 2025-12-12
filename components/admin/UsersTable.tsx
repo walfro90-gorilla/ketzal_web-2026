@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import { MoreHorizontal, User, Shield, Briefcase, Award, Eye, Trash, Edit } from 'lucide-react';
 import { useState } from 'react';
 import { deleteUser, updateUserRole } from '@/app/actions/users';
-import Link from 'next/link';
+import { Link } from '@/navigation';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
 
@@ -52,7 +52,7 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
     };
 
     return (
-        <div className="bg-card border border-border rounded-xl overflow-hidden min-h-[400px]">
+        <div className="bg-card border border-border rounded-xl min-h-[400px]">
             <div className="overflow-x-auto relative">
                 <table className="w-full text-sm text-left">
                     <thead className="bg-white/5 text-gray-400 uppercase font-medium">
@@ -109,30 +109,32 @@ export default function UsersTable({ initialUsers }: UsersTableProps) {
 
                                         {/* Simple Custom Dropdown */}
                                         {openMenuId === user.id && (
-                                            <div className="absolute right-8 top-10 mt-2 w-48 bg-card border border-border shadow-xl rounded-lg z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100">
-                                                <Link href={`/admin/users/${user.id}`} className="flex items-center gap-2 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition-colors text-left w-full">
+                                            <div className="absolute right-10 top-0 mr-2 w-48 bg-gray-950 border border-gray-800 shadow-2xl rounded-lg z-[100] overflow-hidden animate-in fade-in zoom-in-95 duration-100 ring-1 ring-white/10">
+                                                <Link href={`/admin/users/${user.id}`} className="flex items-center gap-2 px-4 py-3 text-gray-300 hover:bg-white/10 hover:text-white transition-colors text-left w-full border-b border-gray-800">
                                                     <Eye size={14} />
                                                     View Details
                                                 </Link>
-                                                <div className="border-t border-border">
-                                                    <p className="px-4 py-2 text-xs text-gray-500 font-bold uppercase">Change Role</p>
+                                                <div className="border-t border-gray-800 bg-gray-950">
+                                                    <p className="px-4 py-2 text-[10px] text-gray-500 font-bold uppercase tracking-wider">Change Role</p>
                                                     <button
                                                         onClick={() => handleRoleUpdate(user.id, 'provider')}
-                                                        className="flex items-center gap-2 px-4 py-2 text-primary hover:bg-white/5 w-full text-left text-xs"
+                                                        className="flex items-center gap-2 px-4 py-2 text-primary hover:bg-primary/10 w-full text-left text-xs font-medium transition-colors"
                                                     >
+                                                        <Briefcase size={12} />
                                                         Make Provider
                                                     </button>
                                                     <button
                                                         onClick={() => handleRoleUpdate(user.id, 'ambassador')}
-                                                        className="flex items-center gap-2 px-4 py-2 text-secondary hover:bg-white/5 w-full text-left text-xs"
+                                                        className="flex items-center gap-2 px-4 py-2 text-secondary hover:bg-secondary/10 w-full text-left text-xs font-medium transition-colors"
                                                     >
+                                                        <Award size={12} />
                                                         Make Ambassador
                                                     </button>
                                                 </div>
-                                                <div className="border-t border-border">
+                                                <div className="border-t border-gray-800 bg-gray-950">
                                                     <button
                                                         onClick={() => handleDelete(user.id)}
-                                                        className="flex items-center gap-2 px-4 py-3 text-red-500 hover:bg-red-500/10 transition-colors w-full text-left"
+                                                        className="flex items-center gap-2 px-4 py-3 text-red-500 hover:bg-red-500/10 transition-colors w-full text-left font-medium"
                                                     >
                                                         <Trash size={14} />
                                                         Delete User

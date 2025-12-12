@@ -3,6 +3,7 @@ import ServicesTable from '@/components/admin/ServicesTable';
 import { getTranslations } from 'next-intl/server';
 
 export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const supabase = await createClient();
 
     // Fetch pending services

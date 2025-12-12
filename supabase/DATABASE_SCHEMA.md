@@ -40,6 +40,30 @@ CREATE TABLE public.destinations (
   updated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT destinations_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.post_comments (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  post_id uuid NOT NULL,
+  user_id uuid NOT NULL,
+  parent_comment_id uuid,
+  content text NOT NULL CHECK (length(content) > 0 AND length(content) <= 500),
+  likes_count integer DEFAULT 0 CHECK (likes_count >= 0),
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT post_comments_pkey PRIMARY KEY (id),
+  CONSTRAINT post_comments_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id),
+  CONSTRAINT post_comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id),
+  CONSTRAINT post_comments_parent_comment_id_fkey FOREIGN KEY (parent_comment_id) REFERENCES public.post_comments(id)
+);
+CREATE TABLE public.post_likes (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  user_id uuid NOT NULL,
+  post_id uuid NOT NULL,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT post_likes_pkey PRIMARY KEY (id),
+  CONSTRAINT post_likes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id),
+  CONSTRAINT post_likes_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id)
+);
 CREATE TABLE public.posts (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   user_id uuid,
@@ -66,6 +90,7 @@ CREATE TABLE public.profiles (
   km_container numeric DEFAULT 0,
   is_verified boolean DEFAULT false,
   created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT profiles_pkey PRIMARY KEY (id),
   CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id)
 );
@@ -114,6 +139,17 @@ CREATE TABLE public.services (
   location_place_id text,
   CONSTRAINT services_pkey PRIMARY KEY (id),
   CONSTRAINT services_provider_id_fkey FOREIGN KEY (provider_id) REFERENCES public.profiles(id)
+);
+CREATE TABLE public.site_settings (
+  id integer NOT NULL DEFAULT 1 CHECK (id = 1),
+  site_name text DEFAULT 'Ketzal'::text,
+  site_description text,
+  logo_url text,
+  contact_email text,
+  contact_phone text,
+  maintenance_mode boolean DEFAULT false,
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT site_settings_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.spatial_ref_sys (
   srid integer NOT NULL CHECK (srid > 0 AND srid <= 998999),

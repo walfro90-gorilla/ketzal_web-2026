@@ -4,6 +4,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import QueryProvider from '@/providers/QueryProvider';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import "../globals.css";
 
 const geistSans = Geist({
@@ -40,13 +42,17 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground flex flex-col min-h-screen`}
       >
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
-            {children}
+            <Navbar />
+            <main className="flex-grow pt-16">
+              {children}
+            </main>
+            <Footer />
           </QueryProvider>
         </NextIntlClientProvider>
       </body>

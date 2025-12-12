@@ -73,6 +73,7 @@ export async function deleteUser(userId: string) {
 }
 
 export async function updateUserRole(userId: string, newRole: 'traveler' | 'provider' | 'admin' | 'ambassador') {
+    console.log(`[Admin] Initiating role update. User: ${userId}, Target Role: ${newRole}`);
     const supabaseAdmin = createAdminClient();
 
     // Update Public Profile
@@ -82,8 +83,11 @@ export async function updateUserRole(userId: string, newRole: 'traveler' | 'prov
         .eq('id', userId);
 
     if (profileError) {
-        return { error: profileError.message };
+        console.error(`[Admin] FATAL: Profile update failed for user ${userId}. Error:`, profileError);
+        return { error: `Database Error: ${profileError.message}` };
     }
+
+    console.log(`[Admin] Profile updated successfully for user ${userId}. Syncing Auth metadata...`);
 
     // Update Auth Metadata (to keep them in sync if you use metadata for claims)
     const { error: authError } = await supabaseAdmin.auth.admin.updateUserById(userId, {
@@ -91,7 +95,9 @@ export async function updateUserRole(userId: string, newRole: 'traveler' | 'prov
     });
 
     if (authError) {
-        console.warn("Auth metadata sync failed", authError);
+        console.warn(`[Admin] WARNING: Auth metadata sync failed for user ${userId}:`, authError);
+    } else {
+        console.log(`[Admin] Auth metadata synced successfully for user ${userId}.`);
     }
 
     revalidatePath('/admin/users');

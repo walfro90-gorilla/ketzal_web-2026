@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/navigation';
 import LanguageSelector from '@/components/LanguageSelector';
-import { LayoutDashboard, Users, FileText, Wallet, Settings, Menu, MapPin } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, Wallet, Settings, Menu, MapPin, Video } from 'lucide-react';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { clsx } from 'clsx';
 
@@ -15,6 +15,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     const navItems = [
         { href: '/admin', label: t('dashboard'), icon: LayoutDashboard },
+        { href: '/admin/posts', label: 'Posts', icon: Video },
         { href: '/admin/services', label: t('services'), icon: FileText },
         { href: '/admin/destinations', label: t('destinations'), icon: MapPin },
         { href: '/admin/users', label: t('users'), icon: Users },
