@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 
 interface NavUserMenuProps {
     user: User;
+    role?: string | null;
 }
 
-export default function NavUserMenu({ user }: NavUserMenuProps) {
+export default function NavUserMenu({ user, role }: NavUserMenuProps) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -38,6 +39,25 @@ export default function NavUserMenu({ user }: NavUserMenuProps) {
     // Get user initials or default avatar
     const initials = user.email?.substring(0, 2).toUpperCase() || "KV";
 
+    // Determine Dashboard Path
+    let dashboardPath = "/";
+    switch (role) {
+        case "admin":
+            dashboardPath = "/admin";
+            break;
+        case "provider":
+            dashboardPath = "/provider";
+            break;
+        case "ambassador":
+            dashboardPath = "/ambassador";
+            break;
+        case "traveler":
+            dashboardPath = "/traveler";
+            break;
+        default:
+            dashboardPath = "/"; // Or maybe just don't show the link?
+    }
+
     return (
         <div className="relative" ref={menuRef}>
             <button
@@ -53,18 +73,21 @@ export default function NavUserMenu({ user }: NavUserMenuProps) {
                 <div className="absolute right-0 mt-3 w-56 bg-[#1a1a1a] rounded-xl shadow-2xl border border-white/10 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
                     <div className="p-4 border-b border-white/10">
                         <p className="text-sm font-medium text-white truncate">{user.email}</p>
-                        <p className="text-xs text-gray-400 mt-1">User Account</p>
+                        <p className="text-xs text-gray-400 mt-1 capitalize">{role || 'User'} Account</p>
                     </div>
 
                     <div className="p-2">
-                        <Link
-                            href="/admin"
-                            className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
-                            onClick={() => setIsOpen(false)}
-                        >
-                            <LayoutDashboard size={16} />
-                            <span>Dashboard</span>
-                        </Link>
+                        {/* Only show Dashboard link if role is assigned (even traveler has a 'dashboard' page now) */}
+                        {role && (
+                            <Link
+                                href={dashboardPath}
+                                className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                <LayoutDashboard size={16} />
+                                <span>Dashboard</span>
+                            </Link>
+                        )}
 
                         <Link
                             href="/profile"

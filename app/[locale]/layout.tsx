@@ -4,8 +4,10 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import QueryProvider from '@/providers/QueryProvider';
+import { ThemeProvider } from "@/providers/ThemeProvider";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ConditionalFooter from '@/components/ConditionalFooter';
 import "../globals.css";
 
 const geistSans = Geist({
@@ -48,11 +50,18 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
-            <Navbar />
-            <main className="flex-grow pt-16">
-              {children}
-            </main>
-            <Footer />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Navbar />
+              <main className="flex-grow pt-16">
+                {children}
+              </main>
+              <ConditionalFooter />
+            </ThemeProvider>
           </QueryProvider>
         </NextIntlClientProvider>
       </body>

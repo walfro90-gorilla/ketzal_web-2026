@@ -7,6 +7,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 import { LayoutDashboard, Users, FileText, Wallet, Settings, Menu, MapPin, Video } from 'lucide-react';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { clsx } from 'clsx';
+import Footer from '@/components/Footer';
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     const t = useTranslations('Sidebar');
@@ -26,12 +27,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     return (
         <div className="min-h-screen flex bg-background text-foreground">
             {/* Sidebar */}
-            <aside className="w-64 border-r border-border hidden md:flex flex-col bg-background/95 backdrop-blur fixed h-full z-10">
-                <div className="h-16 flex items-center px-6 border-b border-border">
-                    <span className="text-xl font-bold tracking-widest text-primary">KETZAL</span>
-                </div>
-
-                <nav className="flex-1 p-4 space-y-2">
+            <aside className="w-64 border-r border-border hidden md:flex flex-col bg-background/95 backdrop-blur fixed bottom-0 top-16 z-40">
+                <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
                     {navItems.map((item) => {
                         const isActive = pathname === item.href;
                         const Icon = item.icon;
@@ -53,7 +50,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     })}
                 </nav>
 
-                <div className="p-4 border-t border-border">
+                <div className="p-4 border-t border-border mt-auto">
                     <div className="flex items-center gap-2 text-xs text-gray-500">
                         <div className={clsx("w-2 h-2 rounded-full", isOnline ? "bg-green-500" : "bg-red-500 animate-pulse")} />
                         {isOnline ? "Online" : "Offline Mode"}
@@ -62,22 +59,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 md:ml-64 flex flex-col min-h-screen">
-                <header className="h-16 border-b border-border flex items-center justify-between px-6 bg-background/50 backdrop-blur sticky top-0 z-20">
-                    <div className="md:hidden">
-                        <Menu className="text-gray-400" />
-                    </div>
-                    <div className="ml-auto flex items-center gap-4">
-                        <LanguageSelector />
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-black font-bold text-xs ring-2 ring-white/10">
-                            AD
-                        </div>
-                    </div>
-                </header>
+            <main className="flex-1 md:ml-64 flex flex-col min-h-[calc(100vh-4rem)]">
+                {/* Header removed as requested */}
 
                 <div className="p-6 md:p-8 max-w-7xl mx-auto w-full">
                     {children}
                 </div>
+                <Footer />
             </main>
         </div>
     );

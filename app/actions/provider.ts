@@ -2,7 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { redirect } from '@/navigation'; // Use custom navigation if available or next/navigation
+import { redirect } from 'next/navigation';
 
 export async function createService(prevState: any, formData: FormData) {
     const supabase = await createClient();
@@ -35,7 +35,7 @@ export async function createService(prevState: any, formData: FormData) {
         max_capacity: maxCapacity,
         duration_hours: durationHours,
         available: true
-    });
+    } as any);
 
     if (error) {
         return { message: 'Failed to create service: ' + error.message };
@@ -60,8 +60,8 @@ export async function updateBookingStatus(formData: FormData) {
     // ideally yes, but for MVP strict schema adherence we just run update
     // RLS policies should handle security in Supabase usually.
 
-    await supabase
-        .from('bookings')
+    await (supabase
+        .from('bookings') as any)
         .update({ status: newStatus })
         .eq('id', bookingId);
 

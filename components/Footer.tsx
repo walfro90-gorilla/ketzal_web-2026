@@ -1,5 +1,6 @@
 import { Link } from '@/navigation';
 import { Github, Twitter, Instagram } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -8,9 +9,18 @@ export default function Footer() {
         <footer className="w-full border-t border-white/5 bg-[#0a0a0a] pt-12 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+
+
                     <div className="col-span-1 md:col-span-2">
-                        <Link href="/" className="text-2xl font-black text-white mb-4 block">
-                            KETZAL
+                        <Link href="/" className="inline-block mb-4">
+                            <div className="relative w-32 h-10">
+                                <Image
+                                    src="/images/ketzal-logo-white.png"
+                                    alt="Ketzal Logo White"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
                         </Link>
                         <p className="text-gray-400 text-sm max-w-sm">
                             Advanced Tourism Network & Distributed System. Connecting travelers with authentic experiences through decentralized technology.

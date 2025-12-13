@@ -18,10 +18,10 @@ export default async function ProviderWalletPage({ params }: { params: Promise<{
         .from('wallets')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .single() as any; // Cast result or just assume for now, better to cast data usage.
 
     // 2. Fetch Transactions
-    let transactions = [];
+    let transactions: any[] = [];
     if (wallet) {
         const { data: txs } = await supabase
             .from('transactions')

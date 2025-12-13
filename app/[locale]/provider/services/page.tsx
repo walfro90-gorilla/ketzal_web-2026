@@ -31,7 +31,7 @@ export default async function ServicesPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {services?.map((service) => (
+                {services?.map((service: any) => (
                     <div
                         key={service.id}
                         className="group overflow-hidden rounded-xl border border-slate-800 bg-[#161616] transition-all hover:border-[#00E676]"

@@ -4,7 +4,8 @@ import { useTranslations } from 'next-intl';
 import { createUser } from '@/app/actions/users';
 import { useState, useRef } from 'react';
 import { UserPlus, X, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
+
+// import { toast } from 'sonner';
 
 export default function CreateUserButton() {
     const t = useTranslations('Dashboard.usersTable'); // Reusing or adding new keys

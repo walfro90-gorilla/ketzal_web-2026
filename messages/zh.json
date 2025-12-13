@@ -1,4 +1,21 @@
 {
+    "Landing": {
+        "Hero": {
+            "title": "探索未来的墨西哥",
+            "subtitle": "首个连接旅游、文化和数字经济 (Axocoins) 的超级应用。",
+            "cta_download": "下载应用",
+            "cta_provider": "我是供应商"
+        },
+        "Ecosystem": {
+            "explore": "探索",
+            "pay": "支付",
+            "live": "生活"
+        },
+        "Axocoins": {
+            "title": "数字经济",
+            "subtitle": "旅游交易的未来"
+        }
+    },
     "Sidebar": {
         "dashboard": "仪表板",
         "services": "服务",
@@ -18,12 +35,12 @@
             "name": "姓名",
             "role": "角色",
             "status": "状态",
-            "joined": "注册时间",
+            "joined": "加入时间",
             "actions": "操作"
         },
         "servicesTable": {
             "title": "体验",
-            "provider": "提供者",
+            "provider": "供应商",
             "price": "价格",
             "status": "状态",
             "actions": "审核",
@@ -54,5 +71,36 @@
         "save": "保存",
         "cancel": "取消",
         "loading": "加载中..."
+    },
+    "Auth": {
+        "signup_title": "创建账户",
+        "signup_subtitle": "加入 Ketzal 生态系统",
+        "full_name": "全名",
+        "username": "用户名",
+        "email": "电子邮件",
+        "password": "密码",
+        "role": "我想成为...",
+        "role_traveler": "旅行者 (探索与预订)",
+        "role_provider": "供应商 (提供服务)",
+        "role_ambassador": "大使 (推广与赚钱)",
+        "register": "注册",
+        "already_have_account": "已有账户?",
+        "login": "登录",
+        "success_title": "检查您的电子邮件",
+        "success_msg": "我们已向您发送了确认链接。"
+    },
+    "Profile": {
+        "personal_info": "个人信息",
+        "joined": "加入时间",
+        "activity": "近期活动",
+        "no_recent_activity": "未发现近期活动。"
+    },
+    "Settings": {
+        "title": "设置",
+        "subtitle": "管理您的偏好和账户设置",
+        "language": "语言",
+        "appearance": "外观",
+        "dark_mode": "深色模式",
+        "sign_out": "退出登录"
     }
 }

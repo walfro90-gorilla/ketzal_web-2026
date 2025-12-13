@@ -56,7 +56,7 @@ export default function ServicesTable({ initialServices }: ServicesTableProps) {
                                             <p className="font-medium text-white">{service.title}</p>
                                             <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
                                                 <MapPin size={12} />
-                                                {service.location || 'Remote'}
+                                                {service.location_name || 'Remote'}
                                             </div>
                                         </div>
                                     </td>

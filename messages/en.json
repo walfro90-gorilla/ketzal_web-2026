@@ -1,4 +1,21 @@
 {
+    "Landing": {
+        "Hero": {
+            "title": "Discover the Mexico of the Future",
+            "subtitle": "The first Super App connecting Travel, Culture, and Digital Economy (Axocoins).",
+            "cta_download": "Download App",
+            "cta_provider": "I am a Provider"
+        },
+        "Ecosystem": {
+            "explore": "Explore",
+            "pay": "Pay",
+            "live": "Live"
+        },
+        "Axocoins": {
+            "title": "Digital Economy",
+            "subtitle": "The future of tourism transactions"
+        }
+    },
     "Sidebar": {
         "dashboard": "Dashboard",
         "services": "Services",
@@ -54,5 +71,36 @@
         "save": "Save",
         "cancel": "Cancel",
         "loading": "Loading..."
+    },
+    "Auth": {
+        "signup_title": "Create Account",
+        "signup_subtitle": "Join the Ketzal ecosystem",
+        "full_name": "Full Name",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "role": "I want to be a...",
+        "role_traveler": "Traveler (Explore & Book)",
+        "role_provider": "Provider (Offer Services)",
+        "role_ambassador": "Ambassador (Promote & Earn)",
+        "register": "Sign Up",
+        "already_have_account": "Already have an account?",
+        "login": "Log In",
+        "success_title": "Check your email",
+        "success_msg": "We have sent you a confirmation link."
+    },
+    "Profile": {
+        "personal_info": "Personal Information",
+        "joined": "Joined",
+        "activity": "Recent Activity",
+        "no_recent_activity": "No recent activity found."
+    },
+    "Settings": {
+        "title": "Settings",
+        "subtitle": "Manage your preferences and account settings",
+        "language": "Language",
+        "appearance": "Appearance",
+        "dark_mode": "Dark Mode",
+        "sign_out": "Sign Out"
     }
 }

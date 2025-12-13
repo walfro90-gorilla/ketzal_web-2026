@@ -25,7 +25,7 @@ export async function createDestination(formData: FormData) {
         city: formData.get('city') as string || null,
         country: formData.get('country') as string || null,
         posts_count: 0
-    });
+    } as any);
 
     if (error) {
         console.error("Create Destination Error:", error);

@@ -54,5 +54,53 @@
         "save": "Guardar",
         "cancel": "Cancelar",
         "loading": "Cargando..."
+    },
+    "Auth": {
+        "signup_title": "Crear Cuenta",
+        "signup_subtitle": "Únete al ecosistema Ketzal",
+        "full_name": "Nombre Completo",
+        "username": "Nombre de Usuario",
+        "email": "Correo Electrónico",
+        "password": "Contraseña",
+        "role": "Quiero ser...",
+        "role_traveler": "Viajero (Explorar y Reservar)",
+        "role_provider": "Proveedor (Ofrecer Servicios)",
+        "role_ambassador": "Embajador (Promover y Ganar)",
+        "register": "Registrarse",
+        "already_have_account": "¿Ya tienes cuenta?",
+        "login": "Iniciar Sesión",
+        "success_title": "Revisa tu correo",
+        "success_msg": "Te hemos enviado un enlace de confirmación."
+    },
+    "Landing": {
+        "Hero": {
+            "title": "Descubre el México del Futuro",
+            "subtitle": "La primera Super App que conecta Viajes, Cultura y Economía Digital (Axocoins).",
+            "cta_download": "Descargar App",
+            "cta_provider": "Soy Proveedor"
+        },
+        "Ecosystem": {
+            "explore": "Explora",
+            "pay": "Paga",
+            "live": "Vive"
+        },
+        "Axocoins": {
+            "title": "Economía Digital",
+            "subtitle": "El futuro de las transacciones turísticas"
+        }
+    },
+    "Profile": {
+        "personal_info": "Información Personal",
+        "joined": "Se unió en",
+        "activity": "Actividad Reciente",
+        "no_recent_activity": "No hay actividad reciente."
+    },
+    "Settings": {
+        "title": "Configuración",
+        "subtitle": "Administra tus preferencias y configuración de cuenta",
+        "language": "Idioma",
+        "appearance": "Apariencia",
+        "dark_mode": "Modo Oscuro",
+        "sign_out": "Cerrar Sesión"
     }
 }

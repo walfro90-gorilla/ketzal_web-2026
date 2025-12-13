@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import { DollarSign, Calendar, Star, TrendingUp } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Check if exists or inline
+
 // Assuming we don't have Card components yet based on file list, I'll inline styles for reliable first pass.
 
 export default async function ProviderDashboard() {
@@ -20,7 +20,7 @@ export default async function ProviderDashboard() {
         .from('wallets')
         .select('balance, currency_code')
         .eq('user_id', user.id)
-        .single();
+        .single() as any; // Cast result or just assume for now, better to cast data usage.
 
     // 2. Get Services Count & Avg Rating (Manual calc if not in profile)
     const { data: services, count: servicesCount } = await supabase
@@ -29,7 +29,7 @@ export default async function ProviderDashboard() {
         .eq('provider_id', user.id);
 
     const avgRating = services && services.length > 0
-        ? (services.reduce((acc, curr) => acc + (curr.rating || 0), 0) / services.length).toFixed(1)
+        ? (services.reduce((acc, curr: any) => acc + (curr.rating || 0), 0) / services.length).toFixed(1)
         : '0.0';
 
     // 3. Get Pending Bookings

@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { LayoutDashboard, Package, Calendar, Wallet, Settings, LogOut } from 'lucide-react';
 import React from 'react';
 import { createClient } from '@/utils/supabase/server';
+import Footer from '@/components/Footer';
 
 interface SidebarItemProps {
     icon: React.ElementType;
@@ -31,7 +32,7 @@ export default async function ProviderLayout({
 }) {
     // Await params for Next.js 15+ compatibility
     const { locale } = await params;
-    const { user } = await (await createClient()).auth.getUser(); // Also fetching user here might be useful for layout logic if needed later
+    const { data: { user } } = await (await createClient()).auth.getUser();
 
     // In a real app we might useTranslations here, but for now specific text or simple strings
     // const t = useTranslations('ProviderLayout');
@@ -39,14 +40,9 @@ export default async function ProviderLayout({
     return (
         <div className="flex min-h-screen w-full bg-[#0A0A0A] text-slate-100">
             {/* Sidebar */}
-            <aside className="hidden border-r border-slate-800 bg-[#0F0F0F] md:block md:w-64 lg:w-72">
+            <aside className="hidden border-r border-slate-800 bg-[#0F0F0F] md:block md:w-64 lg:w-72 fixed bottom-0 top-16 z-40">
                 <div className="flex h-full flex-col gap-2">
-                    <div className="flex h-16 items-center border-b border-slate-800 px-6">
-                        <Link href="/" className="flex items-center gap-2 font-bold text-lg text-[#00E676]">
-                            <span className="">Ketzal</span>
-                            <span className="text-slate-100">Provider</span>
-                        </Link>
-                    </div>
+                    {/* Logo section removed to use global navbar */}
                     <div className="flex-1 overflow-auto py-4 px-3">
                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4 space-y-2">
                             <SidebarItem icon={LayoutDashboard} label="Dashboard" href="/provider" />
@@ -67,17 +63,12 @@ export default async function ProviderLayout({
             </aside>
 
             {/* Main Content */}
-            <div className="flex flex-col flex-1">
-                <header className="flex h-16 items-center gap-4 border-b border-slate-800 bg-[#0F0F0F] px-6">
-                    <div className="w-full flex justify-between items-center">
-                        <h1 className="text-lg font-semibold text-slate-100">Provider Portal</h1>
-                        {/* <UserNav /> */}
-                        <div className="h-8 w-8 rounded-full bg-slate-700"></div>
-                    </div>
-                </header>
+            <div className="flex flex-col flex-1 md:ml-64 lg:ml-72 min-h-[calc(100vh-4rem)]">
+                {/* Header removed */}
                 <main className="flex-1 p-4 md:p-6 overflow-y-auto">
                     {children}
                 </main>
+                <Footer />
             </div>
         </div>
     );

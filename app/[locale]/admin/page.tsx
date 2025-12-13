@@ -30,7 +30,7 @@ export default async function AdminDashboard() {
     // Let's create an RPC for summing balances later. For now, we will just count Wallets with balance > 0 
     // or calculate from visible rows (not performant for 12k users, but fine for 10).
     const { data: wallets } = await supabase.from('wallets').select('balance');
-    const totalLiquidity = wallets?.reduce((acc, w) => acc + (Number(w.balance) || 0), 0) || 0;
+    const totalLiquidity = wallets?.reduce((acc, w: any) => acc + (Number(w.balance) || 0), 0) || 0;
 
     const stats = [
         {

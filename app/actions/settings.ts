@@ -19,10 +19,20 @@ export async function getSiteSettings() {
 
     if (error) {
         console.error('Error fetching settings:', error);
-        return null;
+        // Fallback to default settings if not found or DB error
+        return {
+            id: 1,
+            site_name: 'Ketzal',
+            site_description: null,
+            logo_url: null,
+            contact_email: null,
+            contact_phone: null,
+            maintenance_mode: false,
+        } as SiteSettings;
     }
     return data as SiteSettings;
 }
+
 
 export async function updateSiteSettings(formData: FormData) {
     const supabase = await createClient();

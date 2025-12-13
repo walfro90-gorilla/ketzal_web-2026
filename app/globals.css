@@ -15,31 +15,40 @@
 }
 
 :root {
-  /* Ketzal Neo-Aztec Theme (Dark by default) */
-  --background: #0A0A0A; /* Obsidian */
-  --foreground: #FAFAFA; /* Generic Light */
+  /* Ketzal Neo-Aztec Theme - Light Mode Default */
+  --background: #FFFFFF;
+  --foreground: #0A0A0A;
+  
+  --primary: #00A859; /* Slightly darker green for contrast on white */
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #FFD700;
+  --secondary-foreground: #000000;
+  
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  
+  --border: #E4E4E7;
+  --input: #E4E4E7;
+  --ring: #00A859;
+}
 
+.dark {
+  /* Dark Mode Overrides */
+  --background: #0A0A0A;
+  --foreground: #FAFAFA;
+  
   --primary: #00E676; /* Jade Ketzal */
   --primary-foreground: #000000;
-
-  --secondary: #FFD700; /* Gold Aztec */
-  --secondary-foreground: #000000;
-
-  --destructive: #EF4444; /* Mars Red */
-  --destructive-foreground: #FFFFFF;
-
+  
+  /* Secondary stays gold */
+  
   --border: #27272A;
   --input: #27272A;
   --ring: #00E676;
 }
 
-/* Force Dark Mode aesthetic even if system is light (for now, as per req) */
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #0A0A0A;
-    --foreground: #FAFAFA;
-  }
-}
+/* Remove forced dark mode media query */
 
 body {
   background-color: var(--background);
