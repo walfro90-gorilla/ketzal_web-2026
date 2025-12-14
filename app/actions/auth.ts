@@ -71,6 +71,7 @@ export async function signupAction(prevState: any, formData: FormData) {
     const fullName = formData.get("fullName") as string;
     const username = formData.get("username") as string;
     const role = formData.get("role") as string;
+    const providerType = formData.get("provider_type") as string;
     const locale = (formData.get("locale") as string) || "en"; // Default to en if not provided
 
     // Basic Validation
@@ -91,6 +92,7 @@ export async function signupAction(prevState: any, formData: FormData) {
                 full_name: fullName,
                 username: username || email.split('@')[0], // Fallback username
                 role: role,
+                provider_type: providerType || null
             },
             // Use environment variable for origin or default to localhost
             emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${locale}/auth/callback`,

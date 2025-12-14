@@ -22,6 +22,32 @@ CREATE TABLE public.bookings (
   CONSTRAINT bookings_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id),
   CONSTRAINT bookings_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id)
 );
+CREATE TABLE public.chat_messages (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  conversation_id uuid NOT NULL,
+  sender_id uuid NOT NULL,
+  content text NOT NULL,
+  type text NOT NULL DEFAULT 'text'::text CHECK (type = ANY (ARRAY['text'::text, 'image'::text, 'video'::text, 'audio'::text, 'file'::text, 'location'::text])),
+  metadata jsonb DEFAULT '{}'::jsonb,
+  is_read boolean NOT NULL DEFAULT false,
+  read_at timestamp with time zone,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT chat_messages_pkey PRIMARY KEY (id),
+  CONSTRAINT chat_messages_conversation_id_fkey FOREIGN KEY (conversation_id) REFERENCES public.conversations(id),
+  CONSTRAINT chat_messages_sender_id_fkey FOREIGN KEY (sender_id) REFERENCES public.profiles(id)
+);
+CREATE TABLE public.conversations (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  participant_ids ARRAY NOT NULL UNIQUE CHECK (array_length(participant_ids, 1) = 2),
+  last_message_content text,
+  last_message_at timestamp with time zone,
+  last_message_sender_id uuid,
+  metadata jsonb DEFAULT '{}'::jsonb,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT conversations_pkey PRIMARY KEY (id)
+);
 CREATE TABLE public.destinations (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   name text NOT NULL,
@@ -39,6 +65,43 @@ CREATE TABLE public.destinations (
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT destinations_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.notification_preferences (
+  user_id uuid NOT NULL,
+  booking_updates boolean DEFAULT true,
+  post_interactions boolean DEFAULT true,
+  wallet_updates boolean DEFAULT true,
+  referral_updates boolean DEFAULT true,
+  system_announcements boolean DEFAULT true,
+  promotions boolean DEFAULT false,
+  push_enabled boolean DEFAULT true,
+  email_enabled boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT notification_preferences_pkey PRIMARY KEY (user_id),
+  CONSTRAINT notification_preferences_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id)
+);
+CREATE TABLE public.notifications (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  user_id uuid NOT NULL,
+  type USER-DEFINED NOT NULL,
+  priority USER-DEFINED DEFAULT 'medium'::notification_priority,
+  title text NOT NULL,
+  body text NOT NULL,
+  data jsonb DEFAULT '{}'::jsonb,
+  reference_id uuid,
+  reference_type text,
+  is_read boolean DEFAULT false,
+  is_delivered boolean DEFAULT false,
+  read_at timestamp with time zone,
+  delivered_at timestamp with time zone,
+  expires_at timestamp with time zone,
+  image_url text,
+  action_url text,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT notifications_pkey PRIMARY KEY (id),
+  CONSTRAINT notifications_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id)
 );
 CREATE TABLE public.post_comments (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
@@ -89,6 +152,8 @@ CREATE TABLE public.profiles (
   is_verified boolean DEFAULT false,
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now(),
+  cover_photo_url text,
+  provider_type USER-DEFINED,
   CONSTRAINT profiles_pkey PRIMARY KEY (id),
   CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id)
 );

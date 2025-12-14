@@ -1,11 +1,12 @@
 'use client';
 
-import { createService } from '@/app/actions/provider';
+import { updateService } from '@/app/actions/provider';
 import { useActionState, useState } from 'react';
-import { ArrowLeft, Loader2, Sparkles, MapPin, DollarSign, Users, Clock, Image as ImageIcon } from 'lucide-react';
+import { ArrowLeft, Loader2, Sparkles, MapPin, DollarSign, Users, Clock, Edit } from 'lucide-react';
 import { Link } from '@/navigation';
 import { useParams } from 'next/navigation';
 import LocationAutocomplete from '@/components/LocationAutocomplete';
+import FileUpload from '@/components/FileUpload';
 
 const SERVICE_TYPES = [
     { value: 'tour', label: 'Guided Tour', description: 'Led by a guide' },
@@ -18,14 +19,24 @@ const initialState = {
     message: '',
 };
 
-import FileUpload from '@/components/FileUpload';
+interface EditServiceFormProps {
+    service: any;
+    locale: string;
+}
 
-export default function NewServicePage() {
-    const [state, formAction, isPending] = useActionState(createService, initialState);
-    const [location, setLocation] = useState<{ name: string; place_id: string; lat: number; lng: number; address: string } | null>(null);
-    const [imageUrl, setImageUrl] = useState('');
-    const params = useParams(); // Should contain { locale: 'es' | 'en' ... }
-    const locale = params?.locale as string || 'es';
+export default function EditServiceForm({ service, locale }: EditServiceFormProps) {
+    const [state, formAction, isPending] = useActionState(updateService, initialState);
+
+    // Initialize state with existing data
+    const [location, setLocation] = useState<{ name: string; place_id: string; lat: number; lng: number; address: string } | null>({
+        name: service.location_name || '',
+        place_id: service.location_place_id || '',
+        lat: service.location_coords?.lat || 0,
+        lng: service.location_coords?.lng || 0,
+        address: service.location_address || ''
+    });
+
+    const [imageUrl, setImageUrl] = useState(service.images?.[0] || '');
 
     return (
         <div className="max-w-5xl mx-auto space-y-8 pb-20">
@@ -36,9 +47,9 @@ export default function NewServicePage() {
                 </Link>
                 <div>
                     <h1 className="text-3xl font-bold text-slate-100 flex items-center gap-2">
-                        Create New Service <Sparkles className="h-5 w-5 text-[#00E676]" />
+                        Edit Service <Edit className="h-5 w-5 text-blue-400" />
                     </h1>
-                    <p className="text-slate-400 text-sm">List a new experience for travelers to discover.</p>
+                    <p className="text-slate-400 text-sm">Update your listing details.</p>
                 </div>
             </div>
 
@@ -52,6 +63,8 @@ export default function NewServicePage() {
                                     {state.message}
                                 </div>
                             )}
+
+                            <input type="hidden" name="id" value={service.id} />
 
                             {/* Hidden Geography Fields */}
                             <input type="hidden" name="latitude" value={location?.lat || ''} />
@@ -73,10 +86,10 @@ export default function NewServicePage() {
                                         id="title"
                                         name="title"
                                         required
+                                        defaultValue={service.title}
                                         className="w-full rounded-md border border-slate-700 bg-[#0A0A0A] px-4 py-3 text-slate-100 focus:border-[#00E676] focus:outline-none focus:ring-1 focus:ring-[#00E676] transition-all"
                                         placeholder="e.g. Magical Sunset Hike in Tepozteco"
                                     />
-                                    <p className="text-xs text-slate-500">Catchy and descriptive title.</p>
                                 </div>
 
                                 <div className="space-y-2">
@@ -86,8 +99,9 @@ export default function NewServicePage() {
                                         name="description"
                                         required
                                         rows={5}
+                                        defaultValue={service.description}
                                         className="w-full rounded-md border border-slate-700 bg-[#0A0A0A] px-4 py-3 text-slate-100 focus:border-[#00E676] focus:outline-none focus:ring-1 focus:ring-[#00E676] transition-all resize-none"
-                                        placeholder="Describe what makes this experience unique, what's included, and what travelers should expect..."
+                                        placeholder="Describe what makes this experience unique..."
                                     />
                                 </div>
                             </div>
@@ -104,7 +118,7 @@ export default function NewServicePage() {
                                                 id="service_type"
                                                 name="service_type"
                                                 required
-                                                defaultValue=""
+                                                defaultValue={service.service_type}
                                                 className="w-full appearance-none rounded-md border border-slate-700 bg-[#0A0A0A] px-4 py-3 text-slate-100 focus:border-[#00E676] focus:outline-none focus:ring-1 focus:ring-[#00E676] transition-all"
                                             >
                                                 <option value="" disabled>Select a type</option>
@@ -112,9 +126,6 @@ export default function NewServicePage() {
                                                     <option key={type.value} value={type.value}>{type.label}</option>
                                                 ))}
                                             </select>
-                                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
-                                                <svg className="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -123,8 +134,9 @@ export default function NewServicePage() {
                                         <LocationAutocomplete
                                             onSelect={setLocation}
                                             className="w-full"
+                                            defaultValue={service.location_name}
                                         />
-                                        {location ? (
+                                        {location && location.name ? (
                                             <p className="text-xs text-[#00E676] flex items-center gap-1">
                                                 <MapPin className="h-3 w-3" /> Selected: {location.name}
                                             </p>
@@ -151,6 +163,7 @@ export default function NewServicePage() {
                                                 required
                                                 min="0"
                                                 step="0.01"
+                                                defaultValue={service.price_mxn}
                                                 className="w-full rounded-md border border-slate-700 bg-[#0A0A0A] pl-9 pr-4 py-3 text-slate-100 focus:border-[#00E676] focus:outline-none focus:ring-1 focus:ring-[#00E676] transition-all"
                                                 placeholder="0.00"
                                             />
@@ -166,6 +179,7 @@ export default function NewServicePage() {
                                                 id="max_capacity"
                                                 name="max_capacity"
                                                 min="1"
+                                                defaultValue={service.max_capacity}
                                                 className="w-full rounded-md border border-slate-700 bg-[#0A0A0A] pl-9 pr-4 py-3 text-slate-100 focus:border-[#00E676] focus:outline-none focus:ring-1 focus:ring-[#00E676] transition-all"
                                                 placeholder="e.g. 10"
                                             />
@@ -182,6 +196,7 @@ export default function NewServicePage() {
                                                 name="duration_hours"
                                                 min="0.5"
                                                 step="0.5"
+                                                defaultValue={service.duration_hours}
                                                 className="w-full rounded-md border border-slate-700 bg-[#0A0A0A] pl-9 pr-4 py-3 text-slate-100 focus:border-[#00E676] focus:outline-none focus:ring-1 focus:ring-[#00E676] transition-all"
                                                 placeholder="e.g. 2"
                                             />
@@ -195,7 +210,7 @@ export default function NewServicePage() {
                                 <h2 className="text-lg font-semibold text-slate-200 border-b border-slate-800 pb-2">Media</h2>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-slate-300">Main Image</label>
-                                    <FileUpload onUploadComplete={(url) => setImageUrl(url)} />
+                                    <FileUpload onUploadComplete={(url) => setImageUrl(url)} defaultValue={imageUrl} />
                                     <input type="hidden" name="image_url" value={imageUrl} />
                                 </div>
                             </div>
@@ -211,15 +226,15 @@ export default function NewServicePage() {
                                 <button
                                     type="submit"
                                     disabled={isPending}
-                                    className="flex items-center gap-2 rounded-lg bg-[#00E676] px-8 py-2.5 text-sm font-bold text-black hover:bg-[#00c865] hover:shadow-[0_0_20px_rgba(0,230,118,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="flex items-center gap-2 rounded-lg bg-blue-500 px-8 py-2.5 text-sm font-bold text-white hover:bg-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isPending ? (
                                         <>
                                             <Loader2 className="h-4 w-4 animate-spin" />
-                                            Creating...
+                                            Updating...
                                         </>
                                     ) : (
-                                        'Create Service'
+                                        'Save Changes'
                                     )}
                                 </button>
                             </div>
@@ -227,33 +242,18 @@ export default function NewServicePage() {
                     </div>
                 </div>
 
-                {/* Sidebar / Preview / Help */}
+                {/* Sidebar Info */}
                 <div className="lg:col-span-1 space-y-6">
                     <div className="rounded-xl border border-slate-800 bg-[#161616] p-6 sticky top-24">
-                        <h3 className="text-lg font-semibold text-slate-100 mb-4">Tips for a great listing</h3>
-                        <ul className="space-y-4 text-sm text-slate-400">
-                            <li className="flex gap-3">
-                                <span className="flex-shrink-0 h-6 w-6 rounded-full bg-slate-800 flex items-center justify-center text-[#00E676] font-bold text-xs">1</span>
-                                <div>
-                                    <strong className="text-slate-200 block mb-1">Be descriptive</strong>
-                                    Travelers want to know exactly what they're paying for.
-                                </div>
-                            </li>
-                            <li className="flex gap-3">
-                                <span className="flex-shrink-0 h-6 w-6 rounded-full bg-slate-800 flex items-center justify-center text-[#00E676] font-bold text-xs">2</span>
-                                <div>
-                                    <strong className="text-slate-200 block mb-1">High quality photos</strong>
-                                    Listings with good photos get 40% more bookings.
-                                </div>
-                            </li>
-                            <li className="flex gap-3">
-                                <span className="flex-shrink-0 h-6 w-6 rounded-full bg-slate-800 flex items-center justify-center text-[#00E676] font-bold text-xs">3</span>
-                                <div>
-                                    <strong className="text-slate-200 block mb-1">Specific Location</strong>
-                                    Make sure travelers know where the meeting point is.
-                                </div>
-                            </li>
-                        </ul>
+                        <h3 className="text-lg font-semibold text-slate-100 mb-2">Service ID</h3>
+                        <code className="block bg-black/50 p-2 rounded text-xs text-slate-500 font-mono break-all mb-4">
+                            {service.id}
+                        </code>
+
+                        <h3 className="text-lg font-semibold text-slate-100 mb-2">Status</h3>
+                        <div className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 ${service.available ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-500'}`}>
+                            {service.available ? 'Active & Visible' : 'Paused / Hidden'}
+                        </div>
                     </div>
                 </div>
             </div>

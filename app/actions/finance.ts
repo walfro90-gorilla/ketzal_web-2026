@@ -3,6 +3,8 @@
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 
+import { createAdminClient } from '@/utils/supabase/admin';
+
 export async function processTransaction(
     walletId: string,
     type: 'deposit' | 'withdrawal',
@@ -10,6 +12,7 @@ export async function processTransaction(
     description: string = ''
 ) {
     const supabase = await createClient();
+    const adminSupabase = createAdminClient();
 
     // Check administrative permissions
     const { data: { user } } = await supabase.auth.getUser();
@@ -21,7 +24,8 @@ export async function processTransaction(
     if (amount <= 0) return { error: "Amount must be positive" };
 
     // 1. Get current wallet balance to validation (especially for withdrawal)
-    const result = await supabase
+    // Use adminSupabase to bypass RLS
+    const result = await adminSupabase
         .from('wallets')
         .select('balance, user_id')
         .eq('id', walletId)
@@ -37,7 +41,7 @@ export async function processTransaction(
     }
 
     // 2. Perform Transaction Record
-    const { error: txError } = await (supabase.from('transactions') as any).insert({
+    const { error: txError } = await (adminSupabase.from('transactions') as any).insert({
         wallet_id: walletId,
         amount: amount,
         type: type,
@@ -54,10 +58,10 @@ export async function processTransaction(
     // For MVP, simplistic update is acceptable given specific Admin role constraint.
 
     const newBalance = type === 'deposit'
-        ? wallet.balance + amount
-        : wallet.balance - amount;
+        ? Number(wallet.balance) + Number(amount)
+        : Number(wallet.balance) - Number(amount);
 
-    const { error: updateError } = await (supabase
+    const { error: updateError } = await (adminSupabase
         .from('wallets') as any)
         .update({ balance: newBalance })
         .eq('id', walletId);

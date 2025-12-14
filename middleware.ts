@@ -38,8 +38,8 @@ export default async function middleware(request: NextRequest) {
 
     // Check if the path is part of a protected route group
     const isAdminRoute = path.includes('/admin');
-    const isProviderRoute = path.includes('/provider');
-    const isAmbassadorRoute = path.includes('/ambassador');
+    const isProviderRoute = path.includes('/provider') && !path.includes('/provider-join');
+    const isAmbassadorRoute = path.includes('/ambassador') && !path.includes('/ambassador-join');
     const isTravelerRoute = path.includes('/traveler');
 
     // If accessing any protected route without being logged in, redirect to login

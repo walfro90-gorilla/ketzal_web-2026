@@ -19,7 +19,8 @@
             "role": "Rol",
             "status": "Estado",
             "joined": "Registrado",
-            "actions": "Acciones"
+            "actions": "Acciones",
+            "view_details": "Ver Detalles"
         },
         "servicesTable": {
             "title": "Experiencia",
@@ -70,7 +71,17 @@
         "already_have_account": "¿Ya tienes cuenta?",
         "login": "Iniciar Sesión",
         "success_title": "Revisa tu correo",
-        "success_msg": "Te hemos enviado un enlace de confirmación."
+        "success_msg": "Te hemos enviado un enlace de confirmación.",
+        "provider_join_title": "Registro de Proveedor",
+        "provider_join_subtitle": "Únete como aliado y expande tu negocio",
+        "ambassador_join_title": "Registro de Embajador",
+        "ambassador_join_subtitle": "Promueve Ketzal y gana recompensas",
+        "service_type": "Tipo de Servicio",
+        "select_type": "Selecciona un tipo",
+        "type_tour": "Tour Guiado",
+        "type_experience": "Actividad y Experiencia",
+        "type_lodging": "Hospedaje",
+        "type_transport": "Transporte"
     },
     "Landing": {
         "Hero": {

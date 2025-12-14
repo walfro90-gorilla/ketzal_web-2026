@@ -36,7 +36,8 @@
             "role": "角色",
             "status": "状态",
             "joined": "加入时间",
-            "actions": "操作"
+            "actions": "操作",
+            "view_details": "查看详情"
         },
         "servicesTable": {
             "title": "体验",

@@ -34,9 +34,9 @@
         "usersTable": {
             "name": "Name",
             "role": "Role",
-            "status": "Status",
             "joined": "Joined",
-            "actions": "Actions"
+            "actions": "Actions",
+            "view_details": "View Details"
         },
         "servicesTable": {
             "title": "Experience",
@@ -87,7 +87,17 @@
         "already_have_account": "Already have an account?",
         "login": "Log In",
         "success_title": "Check your email",
-        "success_msg": "We have sent you a confirmation link."
+        "success_msg": "We have sent you a confirmation link.",
+        "provider_join_title": "Provider Registration",
+        "provider_join_subtitle": "Join as a partner and grow your business",
+        "ambassador_join_title": "Ambassador Registration",
+        "ambassador_join_subtitle": "Promote Ketzal and earn rewards",
+        "service_type": "Service Type",
+        "select_type": "Select a type",
+        "type_tour": "Guided Tour",
+        "type_experience": "Activity & Experience",
+        "type_lodging": "Lodging / Stay",
+        "type_transport": "Transportation"
     },
     "Profile": {
         "personal_info": "Personal Information",

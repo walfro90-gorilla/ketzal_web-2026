@@ -41,7 +41,9 @@ export default function NavUserMenu({ user, role }: NavUserMenuProps) {
 
     // Determine Dashboard Path
     let dashboardPath = "/";
-    switch (role) {
+    const normalizedRole = role?.toLowerCase().trim();
+
+    switch (normalizedRole) {
         case "admin":
             dashboardPath = "/admin";
             break;
