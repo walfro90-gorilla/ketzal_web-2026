@@ -84,29 +84,40 @@ export async function signupAction(prevState: any, formData: FormData) {
     // Sign Up with Supabase Auth
     // We pass additional user metadata which our triggers will pick up
     // to populate the public.profiles table.
+    // --- AUDIT LOG START ---
+    console.log("[AUDIT] signupAction triggered");
+    console.log(`[AUDIT] Role: ${role}`);
+    console.log(`[AUDIT] Provider Type from Form: '${providerType}'`);
+
+    // Validate we actually have the data
+    const metadata = {
+        full_name: fullName,
+        username: username || email.split('@')[0],
+        role: role,
+        provider_type: providerType || null
+    };
+    console.log("[AUDIT] Metadata being sent to Supabase Auth:", JSON.stringify(metadata, null, 2));
+    // --- AUDIT LOG END ---
+
     const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-            data: {
-                full_name: fullName,
-                username: username || email.split('@')[0], // Fallback username
-                role: role,
-                provider_type: providerType || null
-            },
-            // Use environment variable for origin or default to localhost
+            data: metadata,
             emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${locale}/auth/callback`,
         },
     });
 
     if (error) {
-        return { error: error.message };
+        console.error("[AUDIT] Supabase Auth Error Object:", JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
+        return { error: error.message || "Unknown error occurred" };
     }
 
     if (data.user && data.user.identities && data.user.identities.length === 0) {
+        console.warn("[AUDIT] User already registered (Identities empty)");
         return { error: locale === 'es' ? "Este correo ya está registrado" : "Email already registered" };
     }
 
-    // Return success to the client so it can show a confirmation message
+    console.log("[AUDIT] Signup successful for user:", data.user?.id);
     return { success: true };
 }
